@@ -3,6 +3,7 @@ package concordance;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * Processes input text files.
@@ -10,12 +11,14 @@ import java.util.ArrayList;
  */
 public class InputReader {
 
+	private Hashtable<String, IndexItem> index;
 	private ArrayList<String> orderedIndex;
 	private ArrayList<String> contexts;
 	private String lineBuffer;
 	
 	public InputReader(){
 		this.lineBuffer = "";
+		this.index = new Hashtable<String, IndexItem>();
 		this.orderedIndex = new ArrayList<String>();
 		this.contexts = new ArrayList<String>();
 	}
@@ -29,8 +32,8 @@ public class InputReader {
 		//TODO Order the words.
 		String line = "";
 		while((line = file.readLine()) != null){
-			System.out.println(line);
 			this.orderedIndex.add(line);
+			this.index.put(line, new IndexItem());
 		}
 		return this.orderedIndex;
 	}
@@ -50,13 +53,26 @@ public class InputReader {
 		//If line terminated.
 		int terminationIndex = lineSentenceTerminated(line);
 		if(terminationIndex != -1){
+			
 			//Concat to buffer and prepare to flush.
-			lineBuffer.concat(line.substring(0, terminationIndex));
-			contexts.add(lineBuffer);
-			//String remainder = line.substring(terminationIndex);
+			lineBuffer = lineBuffer.concat(line.substring(0, terminationIndex));
+			this.contexts.add(this.lineBuffer);
+			lineBuffer = "";
+			
+			//TODO Index word finding!
+			for(String s : orderedIndex){
+				if(line.contains(s)){
+					
+				}
+			}
+			
+			//TODO Breaks on ellipsis.
+			//TODO Space correction.
+			String remainder = line.substring(terminationIndex+1);
+			this.handleLine(count, remainder);
 		}
 		else{
-			lineBuffer.concat(line);
+			lineBuffer = lineBuffer.concat(line+" ");
 		}
 	}
 	

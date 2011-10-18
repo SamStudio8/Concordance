@@ -47,4 +47,10 @@ public class Concordance {
 		return this.orderedIndex;
 	}
 	
+	public void printContexts(){
+		for(int i=0; i < this.contexts.size(); i++){
+			System.out.println(i+" "+contexts.get(i));
+		}
+	}
+	
 }
