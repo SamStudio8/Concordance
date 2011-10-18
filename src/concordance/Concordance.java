@@ -36,7 +36,16 @@ public class Concordance {
 	 * @return			A sentence this index word appears in as a String
 	 */
 	public String getContext(String forWord){
-		return contexts.get(index.get(forWord).getContextRef());
+		//return contexts.get(index.get(forWord).getContextRef());
+		IndexItem returnItem = index.get(forWord);
+		if(returnItem == null){
+			return "No context found.";
+			//return -1;
+		}
+		else{
+			return contexts.get(returnItem.getContextRef());
+			//return (returnItem.getContextRef());
+		}
 	}
 	
 	public ArrayList<String> getContexts(){

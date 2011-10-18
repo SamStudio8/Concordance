@@ -21,6 +21,10 @@ public class IndexItem {
 		this.contextRef = -1;
 	}
 	
+	public void setContextRef(int ref){
+		this.contextRef = ref;
+	}
+	
 	/**
 	 * Gets the context reference for this IndexItem.
 	 * The context reference points to a String element in the Concordance contexts list.
