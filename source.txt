@@ -1,0 +1,12 @@
+Source file.
+This is a source line in my source file.
+Another line.
+This is
+a dual line sentence.
+Another dual line
+sentence to go after the first one.
+And
+a
+four line,
+just in case.
+Test.

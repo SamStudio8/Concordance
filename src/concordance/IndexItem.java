@@ -11,4 +11,23 @@ import java.util.LinkedList;
 public class IndexItem {
 	private LinkedList lineNumbers;
 	private int contextRef;
+	
+	/**
+	 * Default IndexItem Constructor.
+	 * Initialises lineNumber LinkedList and sets contextRef to -1.
+	 */
+	public IndexItem(){
+		this.lineNumbers = new LinkedList();
+		this.contextRef = -1;
+	}
+	
+	/**
+	 * Gets the context reference for this IndexItem.
+	 * The context reference points to a String element in the Concordance contexts list.
+	 *  
+	 * @return The int reference to this IndexItem's context.
+	 */
+	public int getContextRef(){
+		return this.contextRef;
+	}
 }
