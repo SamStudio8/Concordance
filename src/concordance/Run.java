@@ -21,7 +21,6 @@ public class Run {
 		ConcordanceBuilder cb = new ConcordanceBuilder("indexes.txt", "source.txt");
 		Concordance c = cb.buildConcordance();
 		System.out.println(c.getContext("explosion"));
-		//System.out.println(c.getContext("terrible"));
 		System.out.println(c.getLineNumbers("explosion"));
 	}
 }

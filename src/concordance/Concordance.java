@@ -30,9 +30,9 @@ public class Concordance {
 	
 	/**
 	 * Get the context for a particular index word.
-	 * Returns a sentence this word appears in.
+	 * The context is the first sentence this word appears in from the source text.
 	 * 
-	 * @param forWord	The index word as a String to find a context for
+	 * @param forWord	The index word to find a context for
 	 * @return			A sentence this index word appears in as a String
 	 */
 	public String getContext(String forWord){

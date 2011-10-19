@@ -71,11 +71,13 @@ public class ConcordanceBuilder {
 	private void handleLine(int lineCount, String line){
 		//If line terminated.
 		int terminationIndex = lineSentenceTerminated(line);
+		boolean matchFound = false;
+		
 		if(terminationIndex != -1){
 			
 			//Concat to buffer and prepare to flush.
 			lineBuffer = lineBuffer.concat(line.substring(0, terminationIndex+1));
-			this.contexts.add(this.lineBuffer);
+			
 			
 			//TODO Index word finding!
 			//TODO Add line numbers.
@@ -83,10 +85,14 @@ public class ConcordanceBuilder {
 				if(line.contains(s)){
 					this.index.get(s).setContextRef(sentenceCount);
 					this.index.get(s).addLineNumber(lineCount);
+					matchFound = true;
 				}
 			}
+			if(matchFound){
+				this.contexts.add(this.lineBuffer);
+				sentenceCount++;
+			}
 			
-			sentenceCount++;
 			lineBuffer = "";
 			
 			//TODO Breaks on ellipsis.
