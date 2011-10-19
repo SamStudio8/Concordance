@@ -39,12 +39,10 @@ public class Concordance {
 		//return contexts.get(index.get(forWord).getContextRef());
 		IndexItem returnItem = index.get(forWord);
 		if(returnItem == null){
-			return "No context found.";
-			//return -1;
+			return "No index found for "+forWord+".";
 		}
 		else{
 			return contexts.get(returnItem.getContextRef());
-			//return (returnItem.getContextRef());
 		}
 	}
 	
@@ -62,4 +60,7 @@ public class Concordance {
 		}
 	}
 	
+	public ArrayList<Integer> getLineNumbers(String forWord){
+		return this.index.get(forWord).getLineNumbers();
+	}
 }

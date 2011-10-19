@@ -81,9 +81,8 @@ public class ConcordanceBuilder {
 			//TODO Add line numbers.
 			for(String s : orderedIndex){
 				if(line.contains(s)){
-					IndexItem ii = new IndexItem();
-					ii.setContextRef(sentenceCount);
-					this.index.put(s, ii);
+					this.index.get(s).setContextRef(sentenceCount);
+					this.index.get(s).addLineNumber(lineCount);
 				}
 			}
 			

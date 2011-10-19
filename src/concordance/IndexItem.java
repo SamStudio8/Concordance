@@ -1,6 +1,6 @@
 package concordance;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  * Holds concordance data for a particular word in the index.
@@ -9,7 +9,7 @@ import java.util.LinkedList;
  * @author Sam Nicholls (msn)
  */
 public class IndexItem {
-	private LinkedList lineNumbers;
+	private ArrayList<Integer> lineNumbers;
 	private int contextRef;
 	
 	/**
@@ -17,7 +17,7 @@ public class IndexItem {
 	 * Initialises lineNumber LinkedList and sets contextRef to -1.
 	 */
 	public IndexItem(){
-		this.lineNumbers = new LinkedList();
+		this.lineNumbers = new ArrayList<Integer>();
 		this.contextRef = -1;
 	}
 	
@@ -33,5 +33,14 @@ public class IndexItem {
 	 */
 	public int getContextRef(){
 		return this.contextRef;
+	}
+
+	public void addLineNumber(int lineCount) {
+		// TODO Auto-generated method stub
+		this.lineNumbers.add(lineCount);
+	}
+	
+	public ArrayList<Integer> getLineNumbers(){
+		return this.lineNumbers;
 	}
 }
