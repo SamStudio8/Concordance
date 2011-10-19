@@ -2,6 +2,7 @@ package concordance;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  * Holds the Concordance for a particular list of indexes and a source text.
@@ -12,7 +13,7 @@ import java.util.Hashtable;
 public class Concordance {
 
 	private Hashtable<String, IndexItem> index;
-	private ArrayList<String> contexts;
+	private Vector<String> contexts;
 	private ArrayList<String> orderedIndex;
 	
 	/**
@@ -22,7 +23,7 @@ public class Concordance {
 	 * @param contexts		A list of contexts for all index words
 	 * @param orderedIndex	An ordered list of index words to provide an alphabetical list
 	 */
-	public Concordance(Hashtable<String, IndexItem> index, ArrayList<String> contexts, ArrayList<String> orderedIndex){
+	public Concordance(Hashtable<String, IndexItem> index, Vector<String> contexts, ArrayList<String> orderedIndex){
 		this.index = index;
 		this.contexts = contexts;
 		this.orderedIndex = orderedIndex;
@@ -46,7 +47,7 @@ public class Concordance {
 		}
 	}
 	
-	public ArrayList<String> getContexts(){
+	public Vector<String> getContexts(){
 		return this.contexts;
 	}
 	

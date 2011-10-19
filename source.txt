@@ -3,6 +3,16 @@ This is a source line in my source file.
 Another line.
 This is
 a dual line sentence.
+explosion.
+
+A shitty explosion
+sentence.
+A shitty
+explosion sentence.
+Chapter 1
+
+explosion explosion.
+This is a sentnece. explosion. Another sentence.
 "I am an explosion, yes, I am."
 Another dual line
 sentence to go after the first explosion.
@@ -14,3 +24,6 @@ Test.
 Test...
 A sentence. With two sentences on a line.
 How about another explosion bitch?.
+A.E.E.D.E.
+explosion.
+
