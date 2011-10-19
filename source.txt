@@ -3,6 +3,7 @@ This is a source line in my source file.
 Another line.
 This is
 a dual line sentence.
+"I am an explosion, yes, I am."
 Another dual line
 sentence to go after the first explosion.
 And
@@ -12,3 +13,4 @@ just in case.
 Test.
 Test...
 A sentence. With two sentences on a line.
+How about another explosion bitch?.

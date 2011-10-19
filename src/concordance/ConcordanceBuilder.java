@@ -17,8 +17,14 @@ public class ConcordanceBuilder {
 	private Hashtable<String, IndexItem> index;
 	private ArrayList<String> orderedIndex;
 	private ArrayList<String> contexts;
+	
 	private String lineBuffer;
 	private int sentenceCount = 0;
+	private int terminationIndex;
+	private boolean matchFound;
+	private int endOfSentence;
+	
+	private char[] postTerminationChars = { '\'', '"' };
 
 	/**
 	 * Initialises the data structures and processes the input files.
@@ -64,26 +70,31 @@ public class ConcordanceBuilder {
 		return this.contexts;
 	}
 	
-	public Hashtable<String, IndexItem> getIndex(){
-		return this.index;
-	}
-	
 	private void handleLine(int lineCount, String line){
 		//If line terminated.
-		int terminationIndex = lineSentenceTerminated(line);
-		boolean matchFound = false;
+		terminationIndex = lineSentenceTerminated(line);
+		matchFound = false;
 		
 		if(terminationIndex != -1){
 			
-			//Concat to buffer and prepare to flush.
-			lineBuffer = lineBuffer.concat(line.substring(0, terminationIndex+1));
-			
+			//Concat to buffer and prepare to flush unless quote or bracket follows fullstop.
+			if(terminationIndex != line.length()-1){
+				if(checkPostTerminationChar(line.charAt(terminationIndex+1))){
+					endOfSentence = terminationIndex+2;
+				}
+				else{
+					endOfSentence = terminationIndex+1;
+				}
+				lineBuffer = lineBuffer.concat(line.substring(0, endOfSentence)); 
+			}
 			
 			//TODO Index word finding!
 			//TODO Add line numbers.
 			for(String s : orderedIndex){
 				if(line.contains(s)){
-					this.index.get(s).setContextRef(sentenceCount);
+					if(this.index.get(s).getContextRef() == -1){
+						this.index.get(s).setContextRef(sentenceCount);
+					}
 					this.index.get(s).addLineNumber(lineCount);
 					matchFound = true;
 				}
@@ -108,7 +119,16 @@ public class ConcordanceBuilder {
 	private int lineSentenceTerminated(String line){
 		return line.indexOf(".");
 	}
+	
+	private boolean checkPostTerminationChar(char ch){
+		//return this.postTerminationChars.
+		return (ch == '"') || (ch == '\'');
+	}
 
+	public Hashtable<String, IndexItem> getIndex(){
+		return this.index;
+	}
+	
 	/**
 	 * Construct a completed Concordance.
 	 * 
