@@ -61,7 +61,7 @@ public class Concordance {
 		}
 	}
 	
-	public ArrayList<Integer> getLineNumbers(String forWord){
+	public Vector<Integer> getLineNumbers(String forWord){
 		return this.index.get(forWord).getLineNumbers();
 	}
 }

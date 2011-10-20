@@ -20,8 +20,8 @@ public class Run {
 		//TODO Missing input file.
 		ConcordanceBuilder cb = new ConcordanceBuilder("indexes.txt", "source.txt");
 		Concordance c = cb.buildConcordance();
-		//System.out.println(c.getContexts());
-		System.out.println(c.getContext("explosion"));
-		System.out.println(c.getLineNumbers("explosion"));
+		System.out.println(c.getContexts());
+		System.out.println(c.getContext("Thy"));
+		//System.out.println(c.getLineNumbers("explosion"));
 	}
 }

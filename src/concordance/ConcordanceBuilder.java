@@ -23,7 +23,6 @@ public class ConcordanceBuilder {
 	private String lineBuffer;
 	private int sentenceCount = 0;
 	private int terminationIndex;
-	private boolean matchFound;
 	private int endOfSentence;
 	private String remainder;
 	private String lineProcess;
@@ -78,8 +77,8 @@ public class ConcordanceBuilder {
 	private void handleLine(int lineCount, String line){
 		
 		//Reset index word match flag and check if the line passed is terminated.
-		terminationIndex = lineSentenceTerminated(line);
-		matchFound = false;
+		//terminationIndex = lineSentenceTerminated(line);
+		terminationIndex = line.indexOf(".");
 		
 		//If the line is empty, truncate the lineBuffer.
 		//Used for newlines that frequently occur after headings.
@@ -114,19 +113,17 @@ public class ConcordanceBuilder {
 		//If no context, add it to the contexts and save its element reference in the corresponding IndexItem.
 		//Otherwise just add its line number.		
 		for(String s : orderedIndex){
-			if(lineProcess.contains(s)){
+			//TODO Detect actual words.
+			if(lineProcess.contains(" "+s)){
 				if(this.index.get(s).getContextRef() == -1){
 					this.contexts.add(lineBuffer);
 					this.index.get(s).setContextRef(sentenceCount);
-					break; //TODO Necessary?
+					sentenceCount++;
 				}
 				this.index.get(s).addLineNumber(lineCount);
-				matchFound = true;
+				lineBuffer = "";
+				break; //TODO Break necessary? Profile.
 			}
-		}
-		if(matchFound){	
-			sentenceCount++;
-			lineBuffer = "";
 		}
 		
 		if(terminationIndex != -1){

@@ -1,6 +1,7 @@
 package concordance;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Holds concordance data for a particular word in the index.
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * @author Sam Nicholls (msn)
  */
 public class IndexItem {
-	private ArrayList<Integer> lineNumbers;
+	private Vector<Integer> lineNumbers;
 	private int contextRef;
 	
 	/**
@@ -17,7 +18,7 @@ public class IndexItem {
 	 * Initialises lineNumber LinkedList and sets contextRef to -1.
 	 */
 	public IndexItem(){
-		this.lineNumbers = new ArrayList<Integer>();
+		this.lineNumbers = new Vector<Integer>();
 		this.contextRef = -1;
 	}
 	
@@ -40,7 +41,7 @@ public class IndexItem {
 		this.lineNumbers.add(lineCount);
 	}
 	
-	public ArrayList<Integer> getLineNumbers(){
+	public Vector<Integer> getLineNumbers(){
 		return this.lineNumbers;
 	}
 }
