@@ -1,11 +1,9 @@
 package concordance;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -26,6 +24,7 @@ public class ConcordanceBuilder {
 	private int endOfSentence;
 	private String remainder;
 	private String lineProcess;
+	private boolean matchFound;
 	
 	private Vector<Character> terminators;
 	//private char[] postTerminationChars = { '\'', '"' };
@@ -68,14 +67,13 @@ public class ConcordanceBuilder {
 		int lineCount = 1;
 		
 		while((line = file.readLine()) != null){
-			this.handleLine(lineCount, line);
+			this.handleLine(lineCount, " "+line);
 			lineCount++;
 		}
 		return this.contexts;
 	}
 	
 	private void handleLine(int lineCount, String line){
-		
 		//Reset index word match flag and check if the line passed is terminated.
 		//terminationIndex = lineSentenceTerminated(line);
 		terminationIndex = line.indexOf(".");
@@ -87,24 +85,33 @@ public class ConcordanceBuilder {
 		
 		//If the line is terminated.
 		if(terminationIndex != -1){
-			lineProcess = line.substring(0, terminationIndex);
+			
+			lineProcess = line.substring(0, terminationIndex+1);
+			terminationIndex = lineSentenceTerminated(lineProcess);
 			
 			//Concat to buffer and prepare to flush unless quote or bracket follows fullstop.
-			if(terminationIndex != line.length()-1){
-				if(checkPostTerminationChar(line.charAt(terminationIndex+1))){
+			if(terminationIndex != lineProcess.length()-1){
+				if(checkPostTerminationChar(lineProcess.charAt(terminationIndex+1))){
 					endOfSentence = terminationIndex+2;
 				}
 				else{
 					endOfSentence = terminationIndex+1;
 				}
-				lineBuffer = lineBuffer.concat(line.substring(0, endOfSentence));
+				lineBuffer += lineProcess.substring(0, endOfSentence);
 			}
 			else{
-				lineBuffer = lineBuffer.concat(line.substring(0, terminationIndex+1));
+				lineBuffer += lineProcess.substring(0, terminationIndex+1);
+			}
+			
+			if(matchFound){
+				this.contexts.add(lineBuffer);
+				sentenceCount++;
+				//lineBuffer = "";
+				matchFound = false;
 			}
 		}
 		else{
-			lineBuffer = lineBuffer.concat(line+" ");
+			lineBuffer += line;
 			lineProcess = line;
 		}
 		
@@ -114,21 +121,25 @@ public class ConcordanceBuilder {
 		//Otherwise just add its line number.		
 		for(String s : orderedIndex){
 			//TODO Detect actual words.
-			if(lineProcess.contains(" "+s)){
+			//TODO Words at start of lines are not matched.
+			if(lineProcess.contains(s)){
 				if(this.index.get(s).getContextRef() == -1){
-					this.contexts.add(lineBuffer);
+					//TODO If word is on a line before EOS, the buffer is 
+					//added to contexts before actual EOS.
+					matchFound = true;
 					this.index.get(s).setContextRef(sentenceCount);
-					sentenceCount++;
 				}
 				this.index.get(s).addLineNumber(lineCount);
-				lineBuffer = "";
-				break; //TODO Break necessary? Profile.
+				//break; //TODO Break necessary? Profile.
 			}
 		}
 		
 		if(terminationIndex != -1){
 			remainder = line.substring(terminationIndex+1);
-			this.handleLine(lineCount, remainder);
+		//	if(!remainder.length() > 8){
+		//		this.handleLine(lineCount, remainder);
+		//		System.out.println("Rem: "+remainder+"|");
+		//	}
 		}
 	}
 	
