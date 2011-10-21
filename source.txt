@@ -1,4 +1,5 @@
-﻿Well,
-the small 
-explosion was loud.
+﻿explode.
+"Well,
+the small explosion
+ was loud."
 hi.

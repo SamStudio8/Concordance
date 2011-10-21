@@ -102,13 +102,7 @@ public class ConcordanceBuilder {
 			else{
 				lineBuffer += lineProcess.substring(0, terminationIndex+1);
 			}
-			
-			if(matchFound){
-				this.contexts.add(lineBuffer);
-				sentenceCount++;
-				//lineBuffer = "";
-				matchFound = false;
-			}
+
 		}
 		else{
 			lineBuffer += line;
@@ -128,14 +122,24 @@ public class ConcordanceBuilder {
 					//added to contexts before actual EOS.
 					matchFound = true;
 					this.index.get(s).setContextRef(sentenceCount);
+					
 				}
 				this.index.get(s).addLineNumber(lineCount);
 				//break; //TODO Break necessary? Profile.
 			}
 		}
-		
+				
 		if(terminationIndex != -1){
+			
+			if(matchFound){
+				//System.out.println(lineProcess);
+				//lineBuffer += lineProcess;
+				this.contexts.add(lineBuffer);
+				sentenceCount++;
+				matchFound = false;
+			}
 			remainder = line.substring(terminationIndex+1);
+			lineBuffer = "";
 		//	if(!remainder.length() > 8){
 		//		this.handleLine(lineCount, remainder);
 		//		System.out.println("Rem: "+remainder+"|");
