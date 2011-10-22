@@ -28,7 +28,8 @@ public class ConcordanceBuilder {
 	private String lineProcess;
 	private boolean matchFound;
 	
-	private Pattern terminators = Pattern.compile("[?|!|.]");
+	private Pattern terminators = Pattern.compile("([?|!|.])");
+	private Pattern postTerminators = Pattern.compile("([\"|'|)|}|\\]])");
 	private Matcher matcher;
 
 	/**
@@ -41,12 +42,15 @@ public class ConcordanceBuilder {
 	public ConcordanceBuilder(String indexesFilePath, String textFilePath) throws IOException{
 		//this.fileReader = new InputReader();
 		this.lineBuffer = "";
+		
 		this.index = new Hashtable<String, IndexItem>();
 		this.orderedIndex = new ArrayList<String>();
 		this.contexts = new Vector<String>();
 				
 		this.orderedIndex = this.processIndex(new BufferedReader(new FileReader(indexesFilePath)));
 		this.contexts = this.processSource(new BufferedReader(new FileReader(textFilePath)));
+		
+		
 	}
 	
 	/**
@@ -102,7 +106,8 @@ public class ConcordanceBuilder {
 			//If the line is longer than the location of the terminated char, it's safe to check beyond it.
 			//This checks if there are quote or bracket chars following the regular line terminators.
 			if(terminationIndex != line.length()-1){
-				if(checkPostTerminationChar(line.charAt(terminationIndex+1))){
+				//TODO Passing space via method to allow char to become a charSequence.
+				if(checkPostTerminationChar(" "+line.charAt(terminationIndex+1))){
 					lineProcess = line.substring(0, terminationIndex+2);
 					remainder = line.substring(terminationIndex+2);
 				}
@@ -140,9 +145,11 @@ public class ConcordanceBuilder {
 				sentenceCount++;
 				matchFound = false;
 			}
+			
 			lineBuffer = "";
 			
 			//Save empty recursive calls by checking the remainder contains something.
+			//If a remainder exists, call this method again.
 			if(remainder.length() > 1){
 				this.handleLine(lineCount, remainder);
 			}
@@ -150,14 +157,17 @@ public class ConcordanceBuilder {
 	}
 	
 	private int lineSentenceTerminated(String line){
-		//TODO Regex for ? ! etc.
-		//return line.indexOf(".");
-		this.matcher = this.terminators.matcher(line);
-		return line.indexOf(matcher.group());
+		matcher = terminators.matcher(line);
+		if(matcher.find()){
+			return line.indexOf(matcher.group());
+		}
+		else{
+			return -1;
+		}
 	}
 	
-	private boolean checkPostTerminationChar(char ch){
-		return (ch == '"') || (ch == '\'') || (ch == ')');
+	private boolean checkPostTerminationChar(CharSequence ch){
+		return postTerminators.matcher(ch).find();
 	}
 	
 	/**
