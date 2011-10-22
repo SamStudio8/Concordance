@@ -37,13 +37,12 @@ public class Concordance {
 	 * @return			A sentence this index word appears in as a String
 	 */
 	public String getContext(String forWord){
-		//return contexts.get(index.get(forWord).getContextRef());
 		IndexItem returnItem = index.get(forWord);
 		if(returnItem == null){
 			return "No index found for "+forWord+".";
 		}
 		else{
-			return contexts.get(returnItem.getContextRef());
+			return contexts.get(returnItem.getContextRef()).trim();
 		}
 	}
 	

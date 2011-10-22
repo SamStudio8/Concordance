@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Builds the Concordance for a given list of index words and text.
@@ -21,13 +24,12 @@ public class ConcordanceBuilder {
 	private String lineBuffer;
 	private int sentenceCount = 0;
 	private int terminationIndex;
-	private int endOfSentence;
 	private String remainder;
 	private String lineProcess;
 	private boolean matchFound;
 	
-	private Vector<Character> terminators;
-	//private char[] postTerminationChars = { '\'', '"' };
+	private Pattern terminators = Pattern.compile("[?|!|.]");
+	private Matcher matcher;
 
 	/**
 	 * Initialises the data structures and processes the input files.
@@ -59,9 +61,16 @@ public class ConcordanceBuilder {
 			this.orderedIndex.add(line);
 			this.index.put(line, new IndexItem());
 		}
+		Collections.sort(this.orderedIndex);
 		return this.orderedIndex;
 	}
 	
+	/**
+	 * Reads an input source file and checks for matches of index words.
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
 	public Vector<String> processSource(BufferedReader file) throws IOException{
 		String line = "";
 		int lineCount = 1;
@@ -75,84 +84,80 @@ public class ConcordanceBuilder {
 	
 	private void handleLine(int lineCount, String line){
 		//Reset index word match flag and check if the line passed is terminated.
-		//terminationIndex = lineSentenceTerminated(line);
-		terminationIndex = line.indexOf(".");
+		terminationIndex = lineSentenceTerminated(line);
 		
 		//If the line is empty, truncate the lineBuffer.
 		//Used for newlines that frequently occur after headings.
 		if(line.length() == 0)
 			lineBuffer = "";
 		
-		//If the line is terminated.
+		//If the line is terminated...
 		if(terminationIndex != -1){
 			
+			//..set the line to process as the start of the line up to termination.
+			//Set the remainder of the line to be everything beyond termination.
 			lineProcess = line.substring(0, terminationIndex+1);
-			terminationIndex = lineSentenceTerminated(lineProcess);
+			remainder = line.substring(terminationIndex+1);
 			
-			//Concat to buffer and prepare to flush unless quote or bracket follows fullstop.
-			if(terminationIndex != lineProcess.length()-1){
-				if(checkPostTerminationChar(lineProcess.charAt(terminationIndex+1))){
-					endOfSentence = terminationIndex+2;
+			//If the line is longer than the location of the terminated char, it's safe to check beyond it.
+			//This checks if there are quote or bracket chars following the regular line terminators.
+			if(terminationIndex != line.length()-1){
+				if(checkPostTerminationChar(line.charAt(terminationIndex+1))){
+					lineProcess = line.substring(0, terminationIndex+2);
+					remainder = line.substring(terminationIndex+2);
 				}
-				else{
-					endOfSentence = terminationIndex+1;
-				}
-				lineBuffer += lineProcess.substring(0, endOfSentence);
 			}
-			else{
-				lineBuffer += lineProcess.substring(0, terminationIndex+1);
-			}
-
+			//Append to the line buffer and continue.
+			lineBuffer += lineProcess;
 		}
 		else{
+			//If the line is not terminated, add the whole thing to the buffer.
 			lineBuffer += line;
 			lineProcess = line;
 		}
 		
-		//Iterate over index words to find matches in this line.
-		//If a match is found, check if a context has already been added.
-		//If no context, add it to the contexts and save its element reference in the corresponding IndexItem.
-		//Otherwise just add its line number.		
+		//Iterate over index words, search string for matches.
+		//If a match is found, set the context reference for the corresponding IndexItem if one is not set.
+		//Add the line number to the IndexItem, then continue the loop to the next word.
 		for(String s : orderedIndex){
 			//TODO Detect actual words.
-			//TODO Words at start of lines are not matched.
+			//TODO " "+s loses words that are preceded by brackets etc. - ^A-Za-z
+			//TODO Case sensitivity?
+			//if(lineProcess.contains(s)){
 			if(lineProcess.contains(s)){
 				if(this.index.get(s).getContextRef() == -1){
-					//TODO If word is on a line before EOS, the buffer is 
-					//added to contexts before actual EOS.
 					matchFound = true;
 					this.index.get(s).setContextRef(sentenceCount);
-					
 				}
 				this.index.get(s).addLineNumber(lineCount);
-				//break; //TODO Break necessary? Profile.
+				continue;
 			}
 		}
-				
+		
 		if(terminationIndex != -1){
-			
 			if(matchFound){
-				//System.out.println(lineProcess);
-				//lineBuffer += lineProcess;
 				this.contexts.add(lineBuffer);
 				sentenceCount++;
 				matchFound = false;
 			}
-			remainder = line.substring(terminationIndex+1);
 			lineBuffer = "";
-		//	if(!remainder.length() > 8){
-		//		this.handleLine(lineCount, remainder);
-		//		System.out.println("Rem: "+remainder+"|");
-		//	}
+			
+			//Save empty recursive calls by checking the remainder contains something.
+			if(remainder.length() > 1){
+				this.handleLine(lineCount, remainder);
+			}
 		}
 	}
 	
 	private int lineSentenceTerminated(String line){
-		return line.indexOf(".");
+		//TODO Regex for ? ! etc.
+		//return line.indexOf(".");
+		this.matcher = this.terminators.matcher(line);
+		return line.indexOf(matcher.group());
 	}
 	
 	private boolean checkPostTerminationChar(char ch){
-		return (ch == '"') || (ch == '\'');
+		return (ch == '"') || (ch == '\'') || (ch == ')');
 	}
 	
 	/**

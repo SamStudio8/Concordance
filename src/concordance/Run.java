@@ -23,6 +23,8 @@ public class Run {
 		System.out.println(c.getContexts());
 		//TODO Getcontext for word that doesn't have a context fails.
 		System.out.println(c.getContext("explosion"));
+		System.out.println(c.getContext("loud"));
 		System.out.println(c.getLineNumbers("explosion"));
+		System.out.println(c.getOrderedIndex());
 	}
 }
