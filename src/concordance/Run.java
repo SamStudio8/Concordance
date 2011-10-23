@@ -18,13 +18,13 @@ public class Run {
 	 */
 	public static void main(String args[]) throws IOException{
 		//TODO Missing input file.
-		ConcordanceBuilder cb = new ConcordanceBuilder("indexes.txt", "source.txt");
+		ConcordanceBuilder cb = new ConcordanceBuilder("indexes.txt", "legacy.txt");
 		Concordance c = cb.buildConcordance();
-		System.out.println(c.getContexts());
+		//System.out.println(c.getContexts());
 		//TODO Getcontext for word that doesn't have a context fails.
-		System.out.println(c.getContext("explosion"));
-		System.out.println(c.getContext("loud"));
-		System.out.println(c.getLineNumbers("explosion"));
-		System.out.println(c.getOrderedIndex());
+		//System.out.println(c.getContext("explosion"));
+		System.out.println(c.getContext("And"));
+		//System.out.println(c.getLineNumbers("and"));
+		//System.out.println(c.getOrderedIndex());
 	}
 }

@@ -22,15 +22,13 @@ public class ConcordanceBuilder {
 	private Vector<String> contexts;
 	
 	private String lineBuffer;
-	private int sentenceCount = 0;
-	private int terminationIndex;
-	private String remainder;
+	private int sentenceCount;
 	private String lineProcess;
 	private boolean matchFound;
 	
-	private Pattern terminators = Pattern.compile("([?|!|.])");
-	private Pattern postTerminators = Pattern.compile("([\"|'|)|}|\\]])");
-	private Matcher matcher;
+	private static final Pattern terminators = Pattern.compile("([?|!|.])");
+	private static final Pattern postTerminators = Pattern.compile("([\"|'|)|}|\\]])");
+	private static final Pattern wordside = Pattern.compile("[^A-z]");
 
 	/**
 	 * Initialises the data structures and processes the input files.
@@ -80,6 +78,13 @@ public class ConcordanceBuilder {
 		int lineCount = 1;
 		
 		while((line = file.readLine()) != null){
+
+			//If the line is empty, truncate the lineBuffer.
+			//Used for newlines that frequently occur after headings.
+			if(line.length() == 0){
+				lineBuffer = "";
+			}
+			
 			this.handleLine(lineCount, " "+line);
 			lineCount++;
 		}
@@ -88,12 +93,8 @@ public class ConcordanceBuilder {
 	
 	private void handleLine(int lineCount, String line){
 		//Reset index word match flag and check if the line passed is terminated.
-		terminationIndex = lineSentenceTerminated(line);
-		
-		//If the line is empty, truncate the lineBuffer.
-		//Used for newlines that frequently occur after headings.
-		if(line.length() == 0)
-			lineBuffer = "";
+		int terminationIndex = lineSentenceTerminated(line);
+		String remainder = "";
 		
 		//If the line is terminated...
 		if(terminationIndex != -1){
@@ -141,7 +142,7 @@ public class ConcordanceBuilder {
 		
 		if(terminationIndex != -1){
 			if(matchFound){
-				this.contexts.add(lineBuffer);
+				this.contexts.add(lineBuffer.trim());
 				sentenceCount++;
 				matchFound = false;
 			}
@@ -157,7 +158,7 @@ public class ConcordanceBuilder {
 	}
 	
 	private int lineSentenceTerminated(String line){
-		matcher = terminators.matcher(line);
+		Matcher matcher = terminators.matcher(line);
 		if(matcher.find()){
 			return line.indexOf(matcher.group());
 		}
@@ -166,8 +167,12 @@ public class ConcordanceBuilder {
 		}
 	}
 	
-	private boolean checkPostTerminationChar(CharSequence ch){
+	public boolean checkPostTerminationChar(CharSequence ch){
 		return postTerminators.matcher(ch).find();
+	}
+	
+	private boolean checkWordsides(CharSequence ch){
+		return wordside.matcher(ch).find();
 	}
 	
 	/**
