@@ -24,11 +24,7 @@ public class ConcordanceBuilderTest {
 		//Assert.assertEquals("explosion", c.getOrderedIndex().get(0));
 	}
 	
-	@Test
-	public void checkPostTerminationChar(){
-		Assert.assertFalse(cb.checkPostTerminationChar("."));
-		Assert.assertTrue(cb.checkPostTerminationChar(")"));
-	}
+
 
 	
 }

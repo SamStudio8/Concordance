@@ -22,9 +22,9 @@ public class Run {
 		Concordance c = cb.buildConcordance();
 		//System.out.println(c.getContexts());
 		//TODO Getcontext for word that doesn't have a context fails.
-		//System.out.println(c.getContext("explosion"));
-		System.out.println(c.getContext("And"));
-		//System.out.println(c.getLineNumbers("and"));
+		//System.out.println(c.getContext("\"explosion\""));
+		System.out.println(c.getContext("love"));
+		System.out.println(c.getLineNumbers("love").size());
 		//System.out.println(c.getOrderedIndex());
 	}
 }

@@ -108,7 +108,7 @@ public class ConcordanceBuilder {
 			//This checks if there are quote or bracket chars following the regular line terminators.
 			if(terminationIndex != line.length()-1){
 				//TODO Passing space via method to allow char to become a charSequence.
-				if(checkPostTerminationChar(" "+line.charAt(terminationIndex+1))){
+				if(checkPostTerminationChar(line.charAt(terminationIndex+1))){
 					lineProcess = line.substring(0, terminationIndex+2);
 					remainder = line.substring(terminationIndex+2);
 				}
@@ -126,17 +126,27 @@ public class ConcordanceBuilder {
 		//If a match is found, set the context reference for the corresponding IndexItem if one is not set.
 		//Add the line number to the IndexItem, then continue the loop to the next word.
 		for(String s : orderedIndex){
-			//TODO Detect actual words.
-			//TODO " "+s loses words that are preceded by brackets etc. - ^A-Za-z
 			//TODO Case sensitivity?
-			//if(lineProcess.contains(s)){
 			if(lineProcess.contains(s)){
-				if(this.index.get(s).getContextRef() == -1){
-					matchFound = true;
-					this.index.get(s).setContextRef(sentenceCount);
+				char right = '.';
+//				System.out.println(lineProcess+"||Searching for "+s);
+//				System.out.println(lineProcess.indexOf(s));
+				char left = lineProcess.charAt(lineProcess.indexOf(s)-1);
+				if(lineProcess.length() == lineProcess.indexOf(s)+s.length()){
+					right = '.';
 				}
-				this.index.get(s).addLineNumber(lineCount);
-				continue;
+				else{
+					right = lineProcess.charAt(lineProcess.indexOf(s)+s.length());
+				}
+
+				if(this.checkWordsidesClean(left, right)){
+					if(this.index.get(s).getContextRef() == -1){
+						matchFound = true;
+						this.index.get(s).setContextRef(sentenceCount);
+					}
+					this.index.get(s).addLineNumber(lineCount);
+					continue;
+				}
 			}
 		}
 		
@@ -167,12 +177,18 @@ public class ConcordanceBuilder {
 		}
 	}
 	
-	public boolean checkPostTerminationChar(CharSequence ch){
-		return postTerminators.matcher(ch).find();
+	public boolean checkPostTerminationChar(char ch){
+		return postTerminators.matcher(String.valueOf(ch)).find();
 	}
 	
-	private boolean checkWordsides(CharSequence ch){
-		return wordside.matcher(ch).find();
+	private boolean checkWordsidesClean(char leftCh, char rightCh){
+		//Return true if the word is clean.
+		//Therefore return false if EITHER evaluate to true.
+		boolean b = ((wordside.matcher(String.valueOf(leftCh)).find() == true) && (wordside.matcher(String.valueOf(rightCh)).find() == true));
+//		boolean left = wordside.matcher(String.valueOf(leftCh)).find();
+//		boolean right = wordside.matcher(String.valueOf(rightCh)).find();
+//		System.out.println("LEFT: "+leftCh+"("+left+")\tRIGHT: "+rightCh+"("+right+")\t\tEVAL: "+b);
+		return b;
 	}
 	
 	/**

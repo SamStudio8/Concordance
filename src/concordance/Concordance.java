@@ -38,11 +38,11 @@ public class Concordance {
 	 */
 	public String getContext(String forWord){
 		IndexItem returnItem = index.get(forWord);
-		if(returnItem == null){
+		if(returnItem == null || returnItem.getContextRef() == -1){
 			return "No index found for "+forWord+".";
 		}
 		else{
-			return contexts.get(returnItem.getContextRef()).trim();
+			return contexts.get(returnItem.getContextRef());
 		}
 	}
 	

@@ -1,4 +1,6 @@
-explosion
+"explosion"
+And
+And
 loud
 thy
 thus
@@ -12,3 +14,4 @@ thee
 nor
 Thus
 Thy
+love
