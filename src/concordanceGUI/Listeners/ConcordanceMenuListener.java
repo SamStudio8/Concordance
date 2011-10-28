@@ -1,4 +1,4 @@
-package concordanceGUI;
+package concordanceGUI.Listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

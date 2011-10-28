@@ -4,6 +4,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import concordanceGUI.Listeners.ConcordanceMenuListener;
+
 @SuppressWarnings("serial")
 public class ConcordanceMenu extends JMenuBar{
 

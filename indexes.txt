@@ -1,5 +1,4 @@
-"explosion"
-And
+explosion
 And
 loud
 thy
@@ -7,7 +6,6 @@ thus
 Nor
 Thee
 Ay
-And
 and
 ay
 thee

@@ -1,20 +1,12 @@
 package concordanceGUI;
 
-import java.awt.BorderLayout;
-
 public class BuildGUI {
-	
-	private ConcordanceFrame cf;
 	
 	public BuildGUI(){
 		
-		//Construct the main frame, add menus and listeners.
-		cf = new ConcordanceFrame("Concorderizer", 600, 600, 0, 0);
-		cf.setMenu(new ConcordanceMenu());
-		cf.add(new ConcordanceOptionsPanel(), BorderLayout.NORTH);
-		cf.add(new ConcordanceResultsPanel(), BorderLayout.SOUTH);
-		
-		//Display the frame.
-		cf.displayFrame();
+		ConcordanceModel m = new ConcordanceModel();
+		View v = new View();
+		ConcordanceController c = new ConcordanceController(v, m);
+		v.displayView();
 	} 	
 }

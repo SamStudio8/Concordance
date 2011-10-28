@@ -1,4 +1,4 @@
-package concordanceGUI;
+package concordanceGUI.Panels;
 
 import java.awt.BorderLayout;
 

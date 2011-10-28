@@ -28,7 +28,7 @@ public class Concordance {
 		this.contexts = contexts;
 		this.orderedIndex = orderedIndex;
 	}
-	
+
 	/**
 	 * Get the context for a particular index word.
 	 * The context is the first sentence this word appears in from the source text.
