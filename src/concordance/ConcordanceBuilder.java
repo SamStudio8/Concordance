@@ -38,7 +38,6 @@ public class ConcordanceBuilder {
 	 * @throws IOException 
 	 */
 	public ConcordanceBuilder(String indexesFilePath, String textFilePath) throws IOException{
-		//this.fileReader = new InputReader();
 		this.lineBuffer = "";
 		
 		this.index = new Hashtable<String, IndexItem>();
@@ -47,8 +46,6 @@ public class ConcordanceBuilder {
 				
 		this.orderedIndex = this.processIndex(new BufferedReader(new FileReader(indexesFilePath)));
 		this.contexts = this.processSource(new BufferedReader(new FileReader(textFilePath)));
-		
-		
 	}
 	
 	/**
@@ -68,9 +65,9 @@ public class ConcordanceBuilder {
 	}
 	
 	/**
-	 * Reads an input source file and checks for matches of index words.
-	 * @param file
-	 * @return
+	 * 
+	 * @param file			The input file for which to create a Concordance for
+	 * @return				
 	 * @throws IOException
 	 */
 	public Vector<String> processSource(BufferedReader file) throws IOException{
@@ -91,6 +88,15 @@ public class ConcordanceBuilder {
 		return this.contexts;
 	}
 	
+	/**
+	 * Handles a given line from an input file.
+	 * The method checks whether the line is terminated
+	 * ...whether the line contains any index words
+	 *...recursively calls itself
+	 * 
+	 * @param lineCount		The current line number
+	 * @param line			The line from the input file to process
+	 */
 	private void handleLine(int lineCount, String line){
 		//Reset index word match flag and check if the line passed is terminated.
 		int terminationIndex = lineSentenceTerminated(line);
@@ -128,14 +134,16 @@ public class ConcordanceBuilder {
 		for(String s : orderedIndex){
 			//TODO Case sensitivity?
 			if(lineProcess.contains(s)){
+				
+				//Assume the character is a fullstop, unless detected otherwise below.
 				char right = '.';
-//				System.out.println(lineProcess+"||Searching for "+s);
-//				System.out.println(lineProcess.indexOf(s));
+
+				//The character to the left will always be safe to check as an empty
+				//space is appended to the start of each processed line.
 				char left = lineProcess.charAt(lineProcess.indexOf(s)-1);
-				if(lineProcess.length() == lineProcess.indexOf(s)+s.length()){
-					right = '.';
-				}
-				else{
+				
+				//Detect if it is safe to check the character to the right.
+				if(!(lineProcess.length() == lineProcess.indexOf(s)+s.length())){
 					right = lineProcess.charAt(lineProcess.indexOf(s)+s.length());
 				}
 
@@ -145,7 +153,7 @@ public class ConcordanceBuilder {
 						this.index.get(s).setContextRef(sentenceCount);
 					}
 					this.index.get(s).addLineNumber(lineCount);
-					continue;
+					//continue;
 				}
 			}
 		}
@@ -167,7 +175,14 @@ public class ConcordanceBuilder {
 		}
 	}
 	
-	private int lineSentenceTerminated(String line){
+	/**
+	 * Detects whether the currently read line is terminated.
+	 * A line is considered terminated (end of sentence) if the line contains one of the accepted termination characters.
+	 * 
+	 * @param line	The current line from the input file to check for termination.
+	 * @return		The location of the termination if the line is terminated by an accepted character such as the full stop, otherwise -1.
+	 */
+	public int lineSentenceTerminated(String line){
 		Matcher matcher = terminators.matcher(line);
 		if(matcher.find()){
 			return line.indexOf(matcher.group());
@@ -177,13 +192,33 @@ public class ConcordanceBuilder {
 		}
 	}
 	
+	/**
+	 * Checks whether the character following a fullstop is a closing parenthesis or quote.
+	 * 
+	 * @param ch	The character to check for a post-termination character match.
+	 * @return		true if ch matches one of the accepted post-termination characters.
+	 */
 	public boolean checkPostTerminationChar(char ch){
 		return postTerminators.matcher(String.valueOf(ch)).find();
 	}
 	
-	private boolean checkWordsidesClean(char leftCh, char rightCh){
-		//Return true if the word is clean.
-		//Therefore return false if EITHER evaluate to true.
+	/**
+	 * Checks whether the encapsulating characters of a matched word are letters or not.
+	 * If an index word is found in the line that is currently being processed,
+	 * the match checks whether the word is a correct match.
+	 * 
+	 * For example, the word "ay" would actually match as a word in the string "away".
+	 * The method takes parameters of the characters either side of the match, in this
+	 * example, 'w' on the left and '.' on the right.
+	 * 
+	 * If either of the two "wordsides" are matched to an alphabetic character, the
+	 * method returns false and thus the word is not a correct match.
+	 * 
+	 * @param leftCh	The character to the left of the word to check
+	 * @param rightCh	The character to the right of the word to check
+	 * @return 			true if both leftCh and rightCh are non-alphabetic characters, false otherwise.
+	 */
+	public boolean checkWordsidesClean(char leftCh, char rightCh){
 		boolean b = ((wordside.matcher(String.valueOf(leftCh)).find() == true) && (wordside.matcher(String.valueOf(rightCh)).find() == true));
 //		boolean left = wordside.matcher(String.valueOf(leftCh)).find();
 //		boolean right = wordside.matcher(String.valueOf(rightCh)).find();

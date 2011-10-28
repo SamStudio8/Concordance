@@ -1,6 +1,7 @@
 package concordance;
 
 import java.io.IOException;
+import concordanceGUI.*;
 
 /**
  * Initializes and runs the Concordance application.
@@ -20,11 +21,8 @@ public class Run {
 		//TODO Missing input file.
 		ConcordanceBuilder cb = new ConcordanceBuilder("indexes.txt", "legacy.txt");
 		Concordance c = cb.buildConcordance();
-		//System.out.println(c.getContexts());
+		BuildGUI b = new BuildGUI();
+		
 		//TODO Getcontext for word that doesn't have a context fails.
-		//System.out.println(c.getContext("\"explosion\""));
-		System.out.println(c.getContext("love"));
-		System.out.println(c.getLineNumbers("love").size());
-		//System.out.println(c.getOrderedIndex());
 	}
 }
