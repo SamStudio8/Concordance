@@ -14,7 +14,7 @@ public class ConcordanceModel {
 	private Concordance c;
 	
 	/**
-	 * Default ConcordanceModel constructor, initalises the Concordance.
+	 * Default constructor, initalises the Concordance object.
 	 */
 	public ConcordanceModel(){
 		c = new Concordance();

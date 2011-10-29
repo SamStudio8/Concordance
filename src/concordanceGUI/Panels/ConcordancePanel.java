@@ -2,6 +2,7 @@ package concordanceGUI.Panels;
 
 import java.awt.BorderLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /**
@@ -13,6 +14,11 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public abstract class ConcordancePanel extends JPanel {
 	
+	/**
+	 * Default ConcordancePanel constructor.
+	 * Sets the panel to use the BorderLayout, other global settings could be
+	 * set here that would affect all panels used by the application.
+	 */
 	ConcordancePanel(){
 		this.setLayout(new BorderLayout());
 	}
