@@ -21,7 +21,6 @@ public class ConcordanceTest {
 	@Test
 	public void testHate(){
 		Assert.assertEquals("Grant if thou wilt, thou art beloved of many,   But that thou none lov'st is most evident:   For thou art so possessed with murd'rous hate,   That 'gainst thy self thou stick'st not to conspire,   Seeking that beauteous roof to ruinate   Which to repair should be thy chief desire:   O change thy thought, that I may change my mind,   Shall hate be fairer lodged than gentle love?", c.getContext("hate"));
-		Assert.assertEquals(171, c.getLineNumbers("hate").size());
+		Assert.assertEquals(176, c.getLineNumbers("hate").size()); //176 lines was confirmed via grep
 	}
-
 }

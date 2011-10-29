@@ -1,6 +1,8 @@
 explosion
 And
 loud
+And
+and
 thy
 thus
 Nor
@@ -14,3 +16,5 @@ Thus
 Thy
 love
 hate
+AND
+bear

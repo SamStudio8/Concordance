@@ -2,29 +2,32 @@ package concordanceGUI.Panels;
 
 import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import concordanceGUI.Listeners.ConcordanceButtonListener;
 
+@SuppressWarnings("serial")
 public class ConcordanceOptionsPanel extends ConcordancePanel {
 	
 	private JTextField index;
 	private JTextField text;
-	private JButton concorderize;
+	private JButton concordarize;
 
 	public ConcordanceOptionsPanel(){
+		setBorder(BorderFactory.createTitledBorder("Build Concordance"));
 		this.setLayout(new FlowLayout());
 		
-		//index = new JTextField("Index File Path", 15);
-		//text = new JTextField("Text File Path", 15);
-		index = new JTextField("/home/Sam/workspace/Concordance/indexes.txt", 15);
-		text = new JTextField("/home/Sam/workspace/Concordance/legacy.txt", 15);
-		concorderize = new JButton("Concorderize");
+		index = new JTextField("Enter Index File Path", 25);
+		text = new JTextField("Enter Text File Path", 25);
+		//index = new JTextField("/home/Sam/workspace/Concordance/indexes.txt", 15);
+		//text = new JTextField("/home/Sam/workspace/Concordance/legacy.txt", 15);
+		concordarize = new JButton("Concordarize!");
 		
 		this.add(index);
 		this.add(text);
-		this.add(concorderize);
+		this.add(concordarize);
 	}
 
 	public String getIndexPath() {
@@ -36,6 +39,6 @@ public class ConcordanceOptionsPanel extends ConcordancePanel {
 	}
 
 	public void addButtonListener(ConcordanceButtonListener concordanceButtonListener) {
-		this.concorderize.addActionListener(concordanceButtonListener);
+		this.concordarize.addActionListener(concordanceButtonListener);
 	}
 }

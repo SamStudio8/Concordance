@@ -1,27 +1,27 @@
 package concordanceGUI.Panels;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
+import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import concordanceGUI.Listeners.ConcordanceListSelectionListener;
-
-public class ConcordanceResultsPanel extends ConcordancePanel{
+@SuppressWarnings("serial")
+public class ConcordanceLineNumberListPanel extends ConcordancePanel {
 	
 	DefaultListModel listModel = new DefaultListModel();
 	private JList list;
-	private JScrollPane listScollPane;
-	
-	public ConcordanceResultsPanel(){
+
+	public ConcordanceLineNumberListPanel() {
+		setBorder(BorderFactory.createTitledBorder("Line Occurrences"));
+		
 		list = new JList(listModel);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
-		//list.addListSelectionListener(new ConcordanceListSelectionListener(rdp));
 		list.setEnabled(false);
 		
 		JScrollPane listScroller = new JScrollPane(list);
@@ -29,16 +29,11 @@ public class ConcordanceResultsPanel extends ConcordancePanel{
 		this.add(listScroller);
 	}
 
-	public void addListSelectionListener(ConcordanceListSelectionListener listSelectionListener) {
-		list.addListSelectionListener(listSelectionListener);
-	}
-
-	public void buildIndexList(ArrayList<String> orderedIndex) {
+	public void displayResult(Vector<Integer> lineNumbers) {
 		listModel.clear();
-		for(String s: orderedIndex){
-			listModel.addElement(s);
+		for(Integer i: lineNumbers){
+			listModel.addElement(i);
 		}
-		list.setEnabled(true);
 	}
 
 }
