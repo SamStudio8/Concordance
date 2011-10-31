@@ -58,7 +58,7 @@ public class ConcordanceBuilderTest {
 	 * *Tests containing no alphabetical characters in BOTH left and right to assertTrue.
 	 * *Tests containing alphabetical characters in EITHER left and right to assertFalse.
 	 */
-	@Test
+/*	@Test
 	public void checkWordSideClean(){
 		Assert.assertTrue(cb.checkWordsidesClean('.', '.'));
 		Assert.assertTrue(cb.checkWordsidesClean(' ', '.'));
@@ -68,7 +68,7 @@ public class ConcordanceBuilderTest {
 		Assert.assertFalse(cb.checkWordsidesClean('a', ' '));
 		Assert.assertFalse(cb.checkWordsidesClean(' ', 'a'));
 	}
-	
+*/	
 	/**
 	 * Tests an arbitrary selection of characters to ensure that a character
 	 * following a termination character (such as a full stop) is only defined
@@ -81,7 +81,7 @@ public class ConcordanceBuilderTest {
 	 * *Other characters such as alphanumeric to assertFalse.
 	 * *Opening parenthesis should also assertFalse.
 	 */
-	@Test
+/*	@Test
 	public void checkPostTerminationChar(){
 		Assert.assertTrue(cb.checkPostTerminationChar('"'));
 		Assert.assertTrue(cb.checkPostTerminationChar('\''));
@@ -94,7 +94,7 @@ public class ConcordanceBuilderTest {
 		Assert.assertFalse(cb.checkPostTerminationChar('('));
 		Assert.assertFalse(cb.checkPostTerminationChar('{'));
 	}
-
+*/
 	/**
 	 * Tests an arbitrary selection of lines to ensure that lines are only
 	 * defined as terminated when they contain a valid termination character
@@ -104,10 +104,11 @@ public class ConcordanceBuilderTest {
 	 * *Lines containing the full stop, question mark or exclamation mark to return the index of the terminating character in the line.
 	 * *Lines not containing one of these permitting characters to return -1.
 	 */
-	@Test
+/*	@Test
 	public void lineSentenceTerminated(){
 		Assert.assertEquals(0, cb.lineSentenceTerminated("."));
 		Assert.assertEquals(5, cb.lineSentenceTerminated("Hello."));
 		Assert.assertEquals(-1, cb.lineSentenceTerminated("How are you"));
 	}
+*/
 }

@@ -19,6 +19,7 @@ public class ConcordanceTest {
 	private Concordance c;
 	private static final String SHAKESPEARE_HATE_CONTEXT = "Grant if thou wilt, thou art beloved of many,   But that thou none lov'st is most evident:   For thou art so possessed with murd'rous hate,   That 'gainst thy self thou stick'st not to conspire,   Seeking that beauteous roof to ruinate   Which to repair should be thy chief desire:   O change thy thought, that I may change my mind,   Shall hate be fairer lodged than gentle love?";
 	private static final int SHAKESPEARE_HATE_LINECOUNT = 176;
+	private static final int SHAKESPEARE_HATE_FIRST_OCCURRENCE = 349;
 	
 	/**
 	 * Constructs an arbitrary Concordance for use in each test.
@@ -54,12 +55,11 @@ public class ConcordanceTest {
 	 * 
 	 * Expected;
 	 * *Number of elements in lineNumber Vector for index word "hate" to match that of the confirmed number of occurrences in the shakespeare text file.
+	 * *First element of lineNumber Vector to be 349, the known first instance.
 	 */
 	@Test
 	public void testLineNumbers(){
 		Assert.assertEquals(SHAKESPEARE_HATE_LINECOUNT, c.getLineNumbers("hate").size());
+		Assert.assertEquals(SHAKESPEARE_HATE_FIRST_OCCURRENCE, c.getLineNumbers("hate").get(0).intValue());
 	}
-	
-	//@Test
-	//public void testOccurrencesForIndexWords
 }

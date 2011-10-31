@@ -56,7 +56,7 @@ public class ConcordanceBuilder {
 	 * @return				Vector<String> - Alphabetized Vector of index words and phrases
 	 * @throws IOException
 	 */
-	public Vector<String> processIndex(BufferedReader file) throws IOException {
+	private Vector<String> processIndex(BufferedReader file) throws IOException {
 		String line = "";
 		while((line = file.readLine()) != null){
 			line = line.toLowerCase();
@@ -78,12 +78,13 @@ public class ConcordanceBuilder {
 	 * @return				Vector<String> - The first sentence each index word or phrase appears in.	
 	 * @throws IOException
 	 */
-	public Vector<String> processSource(BufferedReader file) throws IOException{
+	private Vector<String> processSource(BufferedReader file) throws IOException{
 		String line = "";
-		int lineCount = 1;
+		int lineCount = 0;
 		
 		while((line = file.readLine()) != null){
-
+			lineCount++;
+			
 			//If the line is empty, truncate the lineBuffer.
 			//Used for newlines that frequently occur after new chapter headings.
 			if(line.length() == 0){
@@ -92,7 +93,7 @@ public class ConcordanceBuilder {
 			}
 			
 			this.handleLine(lineCount, " "+line);
-			lineCount++;
+
 		}
 		return this.contexts;
 	}
@@ -218,7 +219,7 @@ public class ConcordanceBuilder {
 	 * @param line	The line to check for termination.
 	 * @return		The location of the termination if it exists, otherwise -1.
 	 */
-	public int lineSentenceTerminated(String line){
+	private int lineSentenceTerminated(String line){
 		Matcher matcher = terminators.matcher(line);
 		if(matcher.find()){
 			return line.indexOf(matcher.group());
@@ -236,7 +237,7 @@ public class ConcordanceBuilder {
 	 * @param ch	The character to check for a post-termination character match.
 	 * @return		true if ch matches one of the accepted characters, false otherwise.
 	 */
-	public boolean checkPostTerminationChar(char ch){
+	private boolean checkPostTerminationChar(char ch){
 		return postTerminators.matcher(String.valueOf(ch)).find();
 	}
 	
@@ -256,7 +257,7 @@ public class ConcordanceBuilder {
 	 * @param rightCh	The character to the right of the match
 	 * @return 			true if both leftCh and rightCh are non-alphabetic characters, false otherwise.
 	 */
-	public boolean checkWordsidesClean(char leftCh, char rightCh){
+	private boolean checkWordsidesClean(char leftCh, char rightCh){
 		return ((wordside.matcher(String.valueOf(leftCh)).find() == true) 
 				&& (wordside.matcher(String.valueOf(rightCh)).find() == true));
 	}

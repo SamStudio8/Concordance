@@ -11,6 +11,7 @@ import java.util.Vector;
  * @author Sam Nicholls (msn)
  */
 public class IndexItem {
+
 	private Vector<Integer> lineNumbers;
 	private int contextRef;
 	
@@ -24,24 +25,18 @@ public class IndexItem {
 	}
 
 	/**
-	 * Set the sentence context reference for this IndexItem.
-	 * The context for a index word or phrase is the first sentence in which it 
-	 * appears in the source text file. This field references an element in the 
-	 * contexts Vector of the Concordance in which the sentence has been placed.
-	 * 
-	 * @param ref	The element of the Concordance's contexts Vector that contains the context for this index word or phrase.
+	 * Set the sentence context reference for this IndexItem. The context for a index word or phrase is the first sentence in which it  appears in the source text file. This field references an element in the  contexts Vector of the Concordance in which the sentence has been placed.
+	 * @param ref  	The element of the Concordance's contexts Vector that contains the context for this index word or phrase.
+	 * @uml.property  name="contextRef"
 	 */
 	public void setContextRef(int ref){
 		this.contextRef = ref;
 	}
 	
 	/**
-	 * Get the context reference for this IndexItem.
-	 * The context for a index word or phrase is the first sentence in which it 
-	 * appears in the source text file. This field references an element in the 
-	 * contexts Vector of the Concordance in which the sentence has been placed.
-	 *  
-	 * @return 	The element of the Concordance's contexts Vector that contains the context for this index word or phrase.
+	 * Get the context reference for this IndexItem. The context for a index word or phrase is the first sentence in which it  appears in the source text file. This field references an element in the  contexts Vector of the Concordance in which the sentence has been placed.
+	 * @return  	The element of the Concordance's contexts Vector that contains the context for this index word or phrase.
+	 * @uml.property  name="contextRef"
 	 */
 	public int getContextRef(){
 		return this.contextRef;
