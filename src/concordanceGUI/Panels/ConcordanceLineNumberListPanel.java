@@ -1,7 +1,7 @@
 package concordanceGUI.Panels;
 
 import java.awt.Dimension;
-import java.util.Vector;
+import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -46,9 +46,9 @@ public class ConcordanceLineNumberListPanel extends ConcordancePanel {
 	 * ConcordanceIndexListPanel. The controller will pass the new line numbers
 	 * to be displayed.
 	 * 
-	 * @param lineNumbers	Vector of line number occurrences for a given index word or phrase.
+	 * @param lineNumbers	LinkedList of line number occurrences for a given index word or phrase.
 	 */
-	public void displayResult(Vector<Integer> lineNumbers) {
+	public void displayResult(LinkedList<Integer> lineNumbers) {
 		listModel.clear();
 		for(Integer i: lineNumbers){
 			listModel.addElement(i);

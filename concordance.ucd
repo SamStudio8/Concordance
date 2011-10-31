@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="1025,512" id="concordance" metadata="uml2-1.0" initialized="true" tag="10" key="32303037303533312D313020436F6E636F7264616E6365">
-  <children xsi:type="editmodel:ClassEditModel" name="ConcordanceBuilder" location="840,50" size="411,374" id="concordance/ConcordanceBuilder" runTimeClassModel="processIndex(Ljava.io.BufferedReader;),index,ConcordanceBuilder(Ljava.lang.String;Ljava.lang.String;),handleLine(ILjava.lang.String;),orderedIndex,matchFound,wordside,checkPostTerminationChar(C),lineSentenceTerminated(Ljava.lang.String;),sentenceCount,terminators,buildConcordance(),checkWordsidesClean(CC),processSource(Ljava.io.BufferedReader;),contexts,postTerminators,lineBuffer,lineProcess">
+  <children xsi:type="editmodel:ClassEditModel" name="ConcordanceBuilder" location="840,50" size="411,374" id="concordance/ConcordanceBuilder" runTimeClassModel="processIndex(Ljava.io.BufferedReader;),index,ConcordanceBuilder(Ljava.lang.String;Ljava.lang.String;),handleLine(ILjava.lang.String;),orderedIndex,matchFound,wordside,checkPostTerminationChar(C),lineSentenceTerminated(Ljava.lang.String;),sentenceCount,terminators,buildConcordance(),checkWordsidesClean(CC),processSource(Ljava.io.BufferedReader;),postTerminators,contexts,lineBuffer,lineProcess">
     <children xsi:type="editmodel:CompartmentEditModel" size="225,180">
       <children xsi:type="editmodel:AttributeEditModel" name="contexts" id="concordance/ConcordanceBuilder#contexts"/>
       <children xsi:type="editmodel:AttributeEditModel" name="index" id="concordance/ConcordanceBuilder#index"/>
@@ -24,12 +24,12 @@
       <children xsi:type="editmodel:MethodEditModel" name="processSource" id="concordance/ConcordanceBuilder#processSource(Ljava.io.BufferedReader;)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="concordance/ConcordanceBuilder-Standard::Instantiate->concordance/Concordance*concordance/ConcordanceBuilder-Soyatec::Import->concordance/Concordance" source="//@children.0" target="//@children.2" targetEnd="//@children.0/@sourceConnections.0/@children.2" label="//@children.0/@sourceConnections.0/@children.0" sourceEnd="//@children.0/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="concordance/ConcordanceBuilder->Standard::Instantiate" source="//@children.0" target="//@children.2" targetEnd="//@children.0/@sourceConnections.0/@children.2" label="//@children.0/@sourceConnections.0/@children.0" sourceEnd="//@children.0/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Instantiate»" size="119,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,88" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="663,123"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="concordance/ConcordanceBuilder-Standard::Call->concordance/IndexItem*concordance/ConcordanceBuilder-Standard::Instantiate->concordance/IndexItem*concordance/ConcordanceBuilder-Soyatec::Import->concordance/IndexItem" source="//@children.0" target="//@children.1" targetEnd="//@children.0/@sourceConnections.1/@children.2" label="//@children.0/@sourceConnections.1/@children.0" sourceEnd="//@children.0/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="concordance/ConcordanceBuilder->Standard::Call" source="//@children.0" target="//@children.1" targetEnd="//@children.0/@sourceConnections.1/@children.2" label="//@children.0/@sourceConnections.1/@children.0" sourceEnd="//@children.0/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Instantiate, Call»" size="148,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,327" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="248,47"/>
@@ -49,7 +49,7 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsParameterTypes="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.0" name="Concordance" location="20,15" size="663,212" id="concordance/Concordance" runTimeClassModel="Concordance(),Concordance(Ljava.util.Hashtable;Ljava.util.Vector;Ljava.util.Vector;),getLineNumbers(Ljava.lang.String;),index,getContext(Ljava.lang.String;),orderedIndex,getOccurrencesForIndexWords(),contexts,getOrderedIndex()">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.0" name="Concordance" location="20,15" size="663,212" id="concordance/Concordance" runTimeClassModel="Concordance(Ljava.util.Hashtable;Ljava.util.Vector;Ljava.util.Vector;),Concordance(),index,getLineNumbers(Ljava.lang.String;),getContext(Ljava.lang.String;),orderedIndex,getOccurrencesForIndexWords(),contexts,getOrderedIndex()">
     <children xsi:type="editmodel:CompartmentEditModel" size="225,54">
       <children xsi:type="editmodel:AttributeEditModel" name="contexts" id="concordance/Concordance#contexts"/>
       <children xsi:type="editmodel:AttributeEditModel" name="index" id="concordance/Concordance#index"/>
@@ -64,7 +64,7 @@
       <children xsi:type="editmodel:MethodEditModel" name="getOrderedIndex" id="concordance/Concordance#getOrderedIndex()"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="concordance/Concordance-Standard::Call->concordance/IndexItem*concordance/Concordance-Soyatec::Import->concordance/IndexItem" source="//@children.2" target="//@children.1" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="concordance/Concordance->Standard::Call" source="//@children.2" target="//@children.1" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Call»" size="80,13" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="463,212" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="123,0"/>

@@ -37,7 +37,7 @@ public class ConcordanceBuilderTest {
 	 * Xylophone, explosion, EXPLOSION, love, hate, Love, Hate, biscuit, Internet.
 	 * 
 	 * Expected:
-	 * *Ordered words Vector has six elements.
+	 * *Ordered words list has six elements.
 	 * *Xylophone to be final element in array and lowercase.
 	 * 
 	 * @throws IOException 

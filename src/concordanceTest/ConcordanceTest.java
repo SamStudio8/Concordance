@@ -54,8 +54,8 @@ public class ConcordanceTest {
 	 * relatively well used word in a large text source file.
 	 * 
 	 * Expected;
-	 * *Number of elements in lineNumber Vector for index word "hate" to match that of the confirmed number of occurrences in the shakespeare text file.
-	 * *First element of lineNumber Vector to be 349, the known first instance.
+	 * *Number of elements in lineNumber list for index word "hate" to match that of the confirmed number of occurrences in the shakespeare text file.
+	 * *First element of lineNumber list to be 349, the known first instance.
 	 */
 	@Test
 	public void testLineNumbers(){

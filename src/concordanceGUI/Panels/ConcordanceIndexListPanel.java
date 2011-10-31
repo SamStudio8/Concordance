@@ -1,7 +1,7 @@
 package concordanceGUI.Panels;
 
 import java.awt.Dimension;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -57,10 +57,10 @@ public class ConcordanceIndexListPanel extends ConcordancePanel{
 	 * The method resets the JList and then updates it with the new list of Concordance indexes.
 	 * For each word or phrase, the number of occurrences found is also shown in brackets.
 	 *  
-	 * @param orderedIndex		Alphabetized Vector of all index words and phrases
-	 * @param occurrenceSum		For each element of the orderedIndex, the corresponding indexed element in this Vector contains the number of occurrences found. 
+	 * @param orderedIndex		Alphabetized list of all index words and phrases
+	 * @param occurrenceSum		For each element of the orderedIndex, the corresponding indexed element in this list contains the number of occurrences found. 
 	 */
-	public void buildIndexList(Vector<String> orderedIndex, Vector<Integer> occurrenceSum){
+	public void buildIndexList(ArrayList<String> orderedIndex, ArrayList<Integer> occurrenceSum){
 		listModel.clear();
 		for(int i = 0; i < orderedIndex.size(); i++){
 			listModel.addElement(orderedIndex.get(i)+" ("+occurrenceSum.get(i)+")");
